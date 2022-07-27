@@ -7,6 +7,7 @@ const App: React.FC = () => {
     <div className="App">
     <span className="heading">TRACK FLIGHTS </span>
     <FlightTrackingComponent />  
+      Flight Tracking
     </div>
   );
 }

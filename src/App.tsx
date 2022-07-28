@@ -1,15 +1,14 @@
-import React from 'react';
-import './App.css';
-import FlightTrackingComponent from "./FlightTrackingComponent";
+import React from "react";
+import "./App.css";
+import Home from "./pages/Home";
 
 const App: React.FC = () => {
   return (
     <div className="App">
-    <span className="heading">TRACK FLIGHTS </span>
-    <FlightTrackingComponent />  
-      Flight Tracking
+      <span className="h1">TRACK FLIGHTS</span>
+      <Home />
     </div>
   );
-}
+};
 
 export default App;

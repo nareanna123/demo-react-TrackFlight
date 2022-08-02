@@ -2,6 +2,9 @@ import { Autocomplete, TextField } from "@mui/material";
 import React, { Component, useEffect, useState } from 'react'
 import axios from "axios";
 import FlightDetails from "./FlightDetails";
+import IconButton from "@mui/material/IconButton";
+import SearchIcon from '@mui/icons-material/Search';
+
 
 const FlightFinder = (): JSX.Element | null => {
   const top100Flights = [
@@ -58,7 +61,11 @@ const FlightFinder = (): JSX.Element | null => {
           renderInput={(params) => (
             <TextField {...params} label="Destination" />
           )}
+
         />
+        <IconButton type="submit" aria-label="search">
+      <SearchIcon style={{ fill: "blue" }} />
+    </IconButton>
       </div>
       <div>
       <FlightDetails flights={flights}></FlightDetails>

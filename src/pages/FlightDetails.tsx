@@ -1,23 +1,32 @@
-import Flight from './Flight'
-
-
 const FlightsList = (props: any) : JSX.Element | null => {
-     console.log("inside Flights List----");
      console.log(props.flights.length);
    
           return (
-             
-                    <div style={{ color: 'white'}}> 
-                          
-                              {props.flights.map((flight : any, index : any) => 
-                                    <li key={index}>
-                                    <Flight flightDate={flight.flight_date} flightStatus={flight.flight_status} departure={flight.departure.airport} arrival={flight.arrival.airport} airline={flight.airline.name} flightNum={flight.flight.number}></Flight>
-                                   </li>
-                                  
-                              )}
-                       
-                    </div>
-               
+
+                    <div> 
+                <table border={1} className="table" >
+                    <thead>
+                        <tr>
+                            <th align="left">Airline</th>
+                            <th align="left">Air Craft</th>
+                            <th align="left">Status</th>
+                            <th align="left">Departure</th>
+                            <th align="left">Arrival</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {props.flights.map((flight:any, index: any) => (
+                            <tr key={index}>
+                                <td align="left">{flight.airline.name}</td>
+                                <td align="left">{flight.flight.number}</td>
+                                <td align="left">{flight.flight_status}</td>
+                                <td align="left">{flight.departure.airport}</td>
+                                <td align="left">{flight.arrival.airport}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                    </table>           
+                    </div> 
           )
     
   }

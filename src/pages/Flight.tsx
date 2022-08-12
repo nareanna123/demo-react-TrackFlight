@@ -1,21 +1,22 @@
+import { useState, useEffect } from "react";
+import { useParams, useNavigate  } from "react-router-dom";
+import axios from "axios";
 
-const Flight = (props : any) => {
-    console.log("----------Test Flight data final");
-    console.log(props.flightDate + "  " + props.flightStatus + " " + props.departure + " " + props.arrival + " " + props.airline +  " " + props.flightNum);
+const Flight = () => {
+     const { id } = useParams();
+     const navigate = useNavigate();
+
+
+
     return (
-        
-        <div className="flight">
-        <h1>Test Flight Data </h1>
+        <div>
             <div>
-            <h2>{props.flightDate}</h2>
-            <h2>{props.flightStatus}</h2>
-            <h2>{props.departure}</h2>
-            <h2>{props.arrival}</h2>
-            <h2>{props.airline}</h2>
-            <h2>{props.flightNum}</h2>
+              Aircraft Number: {id}
             </div>
-        </div> 
-    );
+
+            <button onClick={() => navigate("/flight-finder")}>Go back</button>
+        </div>
+    )
 }
 
 export default Flight;

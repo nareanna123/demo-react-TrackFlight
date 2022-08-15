@@ -4,6 +4,10 @@ import axios from "axios";
 import FlightDetails from "./FlightDetails";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from '@mui/icons-material/Search';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+    
 
 
 const FlightFinder = (): JSX.Element | null => {
@@ -19,6 +23,7 @@ const FlightFinder = (): JSX.Element | null => {
   const[departureFlights, setDepartureFlights] = useState([]);
   const[flights, setFlights] = useState([]);
   const [searchFlights, setSearchFlights] = useState([]);
+  const toastId = 'toastId';
   
   const [origin, setOrigin] = useState<string[]>([]) 
   const [destination, setDestination] = useState<string[]>([]) 
@@ -28,12 +33,17 @@ const FlightFinder = (): JSX.Element | null => {
   const[selectedOrigin, setSelectedOrigin] = useState<string | null>();
   const[selectedDestination, setSelectedDestination] = useState<string | null>();
 
+
+
     useEffect(()=> {
         getFlights();   
     },[])
     console.log(
         "CHeck Flights API Call start......"
     )
+
+
+    
 
     
     const getFlights=() => 
@@ -82,6 +92,8 @@ const FlightFinder = (): JSX.Element | null => {
          setSearchFlights(filterlist)
      
       }
+
+
  
 
   return (
@@ -122,9 +134,10 @@ const FlightFinder = (): JSX.Element | null => {
       </div>
       <div>
         {searchFlights.length > 0 && <FlightDetails flights={searchFlights}></FlightDetails>}
-        {searchFlights.length === 0 && <FlightDetails flights={flights}></FlightDetails>}
+        {searchFlights.length === 0 && toast("No Flights Found", {toastId: toastId}) && <><FlightDetails flights={flights}></FlightDetails><ToastContainer /></>}
     
       </div>
+      
     </div>
   );
   

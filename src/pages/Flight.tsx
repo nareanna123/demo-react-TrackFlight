@@ -6,9 +6,8 @@ import axios from "axios";
 const Flight = () => {
      const { id } = useParams();
      const navigate = useNavigate();
-     const[flights, setFlights] = useState([]);
-     const[currentFlight, setCurrentFlight] = useState([]);
-     const flightsApiurl = '../flights.json';
+     const[flight, setFlight] = useState([]);
+     const flightsApiurl = ('http://api.aviationstack.com/v1/flights?access_key=6790c7e38acb75d6f9aa4a1a13907cb4&flight_number=' + id);
 
      useEffect(()=> {
         getFlights();   
@@ -17,26 +16,34 @@ const Flight = () => {
      const getFlights = () => {
         axios.get(flightsApiurl)
         .then(resp => {
-        setFlights(resp.data.data);
-
-        let filterlist=flights.filter((flight: any)=>{
-          return flight.flight.number == id;
-           })
-           console.log(filterlist)
-           setCurrentFlight(filterlist)
-           console.log(currentFlight)
-
+        setFlight(resp.data.data);
         })
         .catch(err => {
             console.error("Error " + err);
         })
      }
 
+     const flightInfo = () => {
+            return (
+                <div>
+                    {flight.slice(0, 1).map((flight:any, index: any) => (
+                            <div key={index}>
+                                Airline Name: {flight.airline.name} <br /><br />
+                                Flight Number: {flight.flight.number} <br /><br />
+                                Departure: {flight.departure.airport} <br /><br />
+                                Arrival: {flight.arrival.airport} <br /><br />
+                                Date: {flight.flight_date} <br /> <br />
+                                Status: {flight.flight_status}
+                            </div>
+                        ))}
+                </div>
+            )
+    }
+
     return (
         <div>
-            <div>
-              Aircraft Number: {id}
-            </div>
+
+            {flightInfo()}
 
             <button onClick={() => navigate("/flight-finder")}>Go back</button>
         </div>

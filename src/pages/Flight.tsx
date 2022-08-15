@@ -20,9 +20,9 @@ const Flight = () => {
         setFlights(resp.data.data);
 
         let filterlist=flights.filter((flight: any)=>{
-            //return flight.departure.airport.toLowerCase().includes(searchFlights.toLowerCase())
-          return flight.flight.number === id;
+          return flight.flight.number == id;
            })
+           console.log(filterlist)
            setCurrentFlight(filterlist)
            console.log(currentFlight)
 

@@ -85,6 +85,7 @@ const FlightFinder = (): JSX.Element | null => {
       console.log("inside flights search 2");
       console.log(selectedOrigin);
       console.log(selectedDestination);
+      toast("No Flights Found", {toastId: toastId})
          let filterlist=flights.filter((flight: any)=>{
           //return flight.departure.airport.toLowerCase().includes(searchFlights.toLowerCase())
         return flight.departure.airport === selectedOrigin && flight.arrival.airport === selectedDestination;
@@ -134,7 +135,7 @@ const FlightFinder = (): JSX.Element | null => {
       </div>
       <div>
         {searchFlights.length > 0 && <FlightDetails flights={searchFlights}></FlightDetails>}
-        {searchFlights.length === 0 && toast("No Flights Found", {toastId: toastId}) && <><FlightDetails flights={flights}></FlightDetails><ToastContainer /></>}
+        {searchFlights.length === 0 && <><FlightDetails flights={flights}></FlightDetails><ToastContainer /></>}
     
       </div>
       

@@ -1,21 +1,53 @@
+import { useState, useEffect } from "react";
+import { useParams, useNavigate  } from "react-router-dom";
+import axios from "axios";
 
-const Flight = (props : any) => {
-    console.log("----------Test Flight data final");
-    console.log(props.flightDate + "  " + props.flightStatus + " " + props.departure + " " + props.arrival + " " + props.airline +  " " + props.flightNum);
+
+const Flight = () => {
+     const { id } = useParams();
+     const navigate = useNavigate();
+     const[flight, setFlight] = useState([]);
+     const flightsApiurl = ('http://api.aviationstack.com/v1/flights?access_key=6790c7e38acb75d6f9aa4a1a13907cb4&flight_number=' + id);
+
+     useEffect(()=> {
+        getFlights();   
+     },[])
+
+     const getFlights = () => {
+        axios.get(flightsApiurl)
+        .then(resp => {
+        setFlight(resp.data.data);
+        })
+        .catch(err => {
+            console.error("Error " + err);
+        })
+     }
+
+     const flightInfo = () => {
+            return (
+                <div>
+                    {flight.slice(0, 1).map((flight:any, index: any) => (
+                            <div key={index}>
+                                Airline Name: {flight.airline.name} <br /><br />
+                                Flight Number: {flight.flight.number} <br /><br />
+                                Departure: {flight.departure.airport} <br /><br />
+                                Arrival: {flight.arrival.airport} <br /><br />
+                                Date: {flight.flight_date} <br /> <br />
+                                Status: {flight.flight_status}
+                            </div>
+                        ))}
+                </div>
+            )
+    }
+
     return (
-        
-        <div className="flight">
-        <h1>Test Flight Data </h1>
-            <div>
-            <h2>{props.flightDate}</h2>
-            <h2>{props.flightStatus}</h2>
-            <h2>{props.departure}</h2>
-            <h2>{props.arrival}</h2>
-            <h2>{props.airline}</h2>
-            <h2>{props.flightNum}</h2>
-            </div>
-        </div> 
-    );
+        <div>
+
+            {flightInfo()}
+
+            <button onClick={() => navigate("/flight-finder")}>Go back</button>
+        </div>
+    )
 }
 
 export default Flight;

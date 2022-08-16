@@ -20,7 +20,7 @@ const FlightsList = (props: any): JSX.Element | null => {
       <TableSortLabel
         active={props.orderBy === props.headCell}
         direction={props.orderBy === props.headCell ? props.order : "asc"}
-        //   onClick={handleRequestSort(headCell.id)}
+      //   onClick={handleRequestSort(headCell.id)}
       >
         {props.headCell.label}
         {props.orderBy === props.headCell ? (

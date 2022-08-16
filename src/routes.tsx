@@ -11,6 +11,7 @@ import BrowseByAircraftType from "./pages/BrowseByAircraftType";
 import RandomAirport from "./pages/RandomAirport";
 import RandomFlight from "./pages/RandomFlight";
 import IFRRouteAnalyzer from "./pages/IFRRouteAnalyzer";
+import Flight from "./pages/Flight";
 
 const Router = () => {
   return (
@@ -20,6 +21,7 @@ const Router = () => {
       <Route path="/airport-delays" element={<AirportDelays />} />
       <Route path="/misery-map" element={<MiseryMap />} />
       <Route path="/flight-finder" element={<FlightFinder />} />
+      <Route path="post/:id" element={<Flight />} />
       <Route path="/browse-by-operator" element={<BrowseByOperator />} />
       <Route path="/browse-by-airport" element={<BrowseByAirport />} />
       <Route

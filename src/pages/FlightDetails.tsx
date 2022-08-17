@@ -77,7 +77,7 @@ const FlightsList = (props: any): JSX.Element | null => {
                 <TableCell component="th" scope="row">
                   {flight.airline}
                 </TableCell>
-                <TableCell align="right" sx={{color: "primary.dark"}} onClick={() => {handleShow(); setModalData(flight)}}>{flight.aircraft}</TableCell>
+                <TableCell align="right" style={{color: 'blue', cursor: 'pointer'}} onClick={() => {handleShow(); setModalData(flight)}}>{flight.aircraft}</TableCell>
                 <TableCell align="right">{flight.status}</TableCell>
                 <TableCell align="right">{flight.departure}</TableCell>
                 <TableCell align="right">{flight.arrival}</TableCell>

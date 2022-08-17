@@ -11,11 +11,19 @@ import {
   Box,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
+import { Modal, Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 const FlightsList = (props: any): JSX.Element | null => {
   const { sort, order, orderBy } = props;
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () =>  setShow(true);
+  const [fullscreen, setFullscreen] = useState(true);
+  const [modalData, setModalData] = useState(props);
+  
+
 
   const SortLabel = (props: any) => {
     return (
@@ -69,7 +77,7 @@ const FlightsList = (props: any): JSX.Element | null => {
                 <TableCell component="th" scope="row">
                   {flight.airline}
                 </TableCell>
-                <Link to={'/post/' + flight.aircraft}><TableCell align="right" sx={{color: "primary.dark"}}>{flight.aircraft}</TableCell></Link>
+                <TableCell align="right" sx={{color: "primary.dark"}} onClick={() => {handleShow(); setModalData(flight)}}>{flight.aircraft}</TableCell>
                 <TableCell align="right">{flight.status}</TableCell>
                 <TableCell align="right">{flight.departure}</TableCell>
                 <TableCell align="right">{flight.arrival}</TableCell>
@@ -79,7 +87,38 @@ const FlightsList = (props: any): JSX.Element | null => {
         </Table>
       </TableContainer>
 
-      
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        fullscreen={true}
+        scrollable={true}
+        >
+        <Modal.Header closeButton>
+            <Modal.Title>{modalData.airline} {modalData.aircraft}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <table style={{width: '100%', marginBottom: '2rem'}}>
+              <td style={{width: '50%'}}>
+                <h1>Departure</h1><br />
+                Airport: {modalData.departure}<br />
+              </td>
+              <td style={{width: '50%', alignContent: 'flex-end'}}>
+                <h1>Arrival</h1><br />
+                Airport: {modalData.arrival}<br />
+              </td>
+            </table>
+            Airline: {modalData.airline} <br />
+            Aircraft Number: {modalData.aircraft}<br />
+            Flight Status: {modalData.status}<br />
+          </div>
+
+        </Modal.Body>
+        <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>Close</Button>
+        </Modal.Footer>
+      </Modal>
 
     </StyledContainer>
   );
@@ -94,3 +133,5 @@ const StyledContainer = styled.div`
 const StyledHeaderCell = styled(TableCell)`
   cursor: pointer;
 `;
+
+

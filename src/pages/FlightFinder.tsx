@@ -49,9 +49,8 @@ const FlightFinder = (): JSX.Element | null => {
   console.log("Check Flights API Call start......");
 
   const getFlights = () => {
-    // const flightsApiurl = 'http://api.aviationstack.com/v1/flights?access_key=77e3db56beae869517171f8a55ab9141';
-    const flightsApiurl =
-      "http://api.aviationstack.com/v1/flights?access_key=89c5f6108b671e68c341aa6da66fb46b";
+    //const flightsApiurl = "http://api.aviationstack.com/v1/flights?access_key=89c5f6108b671e68c341aa6da66fb46b";
+    const flightsApiurl = 'flights.json';
     // var params = new URLSearchParams();
     //params.append("access_key", '7701d00a6d906ff847152d3c46b15e78');
 

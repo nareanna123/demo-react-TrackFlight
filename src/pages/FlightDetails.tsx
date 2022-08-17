@@ -94,8 +94,10 @@ const FlightsList = (props: any): JSX.Element | null => {
         fullscreen={true}
         scrollable={true}
         >
-        <Modal.Header closeButton>
-            <Modal.Title>{modalData.airline} {modalData.aircraft}</Modal.Title>
+        <Modal.Header closeButton style={{backgroundColor: '#002f5d', color: 'white'}}>
+            <Modal.Title style={{width: '100%'}}>
+              <span style={{width: '50%'}}>{modalData.airline} {modalData.aircraft}</span> <span style={{width: '50%', float: 'right'}}>Status: <span style={{backgroundColor: 'lightgrey', borderRadius: '0.5rem', color: 'green'}}>{modalData.status}</span></span>
+            </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div>
@@ -114,8 +116,11 @@ const FlightsList = (props: any): JSX.Element | null => {
             Flight Status: {modalData.status}<br />
           </div>
 
+          <div style={{float: 'right', padding: '2rem'}}>
+            <img src="https://www.nationsonline.org/bilder/Map_US_Airports.gif" style={{borderRadius: '2rem'}}/>
+          </div>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer style={{backgroundColor: '#002f5d', color: 'white'}}>
             <Button variant="secondary" onClick={handleClose}>Close</Button>
         </Modal.Footer>
       </Modal>

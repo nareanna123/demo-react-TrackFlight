@@ -7,7 +7,7 @@ const Flight = () => {
      const { id } = useParams();
      const navigate = useNavigate();
      const[flight, setFlight] = useState([]);
-     const flightsApiurl = ('http://api.aviationstack.com/v1/flights?access_key=6790c7e38acb75d6f9aa4a1a13907cb4&flight_number=' + id);
+     const flightsApiurl = ('http://api.aviationstack.com/v1/flights?access_key=89c5f6108b671e68c341aa6da66fb46b&flight_number=' + id);
 
      useEffect(()=> {
         getFlights();   

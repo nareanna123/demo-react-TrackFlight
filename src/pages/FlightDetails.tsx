@@ -11,6 +11,8 @@ import {
   Box,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const FlightsList = (props: any): JSX.Element | null => {
   const { sort, order, orderBy } = props;
@@ -67,7 +69,7 @@ const FlightsList = (props: any): JSX.Element | null => {
                 <TableCell component="th" scope="row">
                   {flight.airline}
                 </TableCell>
-                <TableCell align="right">{flight.aircraft}</TableCell>
+                <Link to={'/post/' + flight.aircraft}><TableCell align="right" sx={{color: "primary.dark"}}>{flight.aircraft}</TableCell></Link>
                 <TableCell align="right">{flight.status}</TableCell>
                 <TableCell align="right">{flight.departure}</TableCell>
                 <TableCell align="right">{flight.arrival}</TableCell>
@@ -76,6 +78,9 @@ const FlightsList = (props: any): JSX.Element | null => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      
+
     </StyledContainer>
   );
 };

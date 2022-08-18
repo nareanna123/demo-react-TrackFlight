@@ -15,6 +15,7 @@ import { visuallyHidden } from "@mui/utils";
 import { Modal, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
+import { ComposableMap, Geographies, Geography, Line, ZoomableGroup  } from "react-simple-maps";
 
 const FlightsList = (props: any): JSX.Element | null => {
   const { sort, order, orderBy } = props;
@@ -64,6 +65,9 @@ const FlightsList = (props: any): JSX.Element | null => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const geoUrl =
+  "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json";
 
   return (
     <StyledContainer>
@@ -181,10 +185,26 @@ const FlightsList = (props: any): JSX.Element | null => {
           </div>
 
           <div style={{ float: "right", padding: "2rem" }}>
-            <img
-              src="https://www.nationsonline.org/bilder/Map_US_Airports.gif"
-              style={{ borderRadius: "2rem" }}
-            />
+            
+          <ComposableMap>
+            <ZoomableGroup center={[0, 0]} zoom={9}>
+              <Geographies geography={geoUrl}>
+                {({ geographies }: any) =>
+                  geographies.map((geo: any) => (
+                    <Geography key={geo.rsmKey} geography={geo} />
+                  ))
+                }
+              </Geographies>
+              <Line
+                from={[2.3522, 48.8566]}
+                to={[-74.006, 40.7128]}
+                stroke="#FF5533"
+                strokeWidth={4}
+                strokeLinecap="round"
+              />
+            </ZoomableGroup>
+          </ComposableMap>
+
           </div>
         </Modal.Body>
         <Modal.Footer style={{ backgroundColor: "#002f5d", color: "white" }}>

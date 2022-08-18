@@ -9,28 +9,40 @@ import {
   Paper,
   TableSortLabel,
   Box,
+  TablePagination,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { Modal, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const FlightsList = (props: any): JSX.Element | null => {
   const { sort, order, orderBy } = props;
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () =>  setShow(true);
+  const handleShow = () => setShow(true);
   const [fullscreen, setFullscreen] = useState(true);
   const [modalData, setModalData] = useState(props);
-  
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [pageData, setPageData] = useState([]);
 
+  useEffect(() => {
+    handlePageData();
+  });
+
+  const handlePageData = () => {
+    setPageData(
+      props.flights.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    );
+  };
 
   const SortLabel = (props: any) => {
     return (
       <TableSortLabel
         active={props.orderBy === props.headCell}
         direction={props.orderBy === props.headCell ? props.order : "asc"}
-      //   onClick={handleRequestSort(headCell.id)}
+        //   onClick={handleRequestSort(headCell.id)}
       >
         {props.headCell.label}
         {props.orderBy === props.headCell ? (
@@ -40,6 +52,17 @@ const FlightsList = (props: any): JSX.Element | null => {
         ) : null}
       </TableSortLabel>
     );
+  };
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   return (
@@ -54,22 +77,22 @@ const FlightsList = (props: any): JSX.Element | null => {
               </StyledHeaderCell>
               <TableCell align="right">Air Craft</TableCell>
               <TableCell align="right">Status</TableCell>
-              <TableCell align="right" onClick={() => sort("departure")}>
+              <StyledHeaderCell align="right" onClick={() => sort("departure")}>
                 Departure{" "}
                 <SortLabel
                   order={order}
                   orderBy={orderBy}
                   headCell="departure"
                 />
-              </TableCell>
-              <TableCell align="right" onClick={() => sort("arrival")}>
+              </StyledHeaderCell>
+              <StyledHeaderCell align="right" onClick={() => sort("arrival")}>
                 Arrival{" "}
                 <SortLabel order={order} orderBy={orderBy} headCell="arrival" />
-              </TableCell>
+              </StyledHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.flights.map((flight: any, index: any) => (
+            {pageData.map((flight: any, index: any) => (
               <TableRow
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -77,7 +100,16 @@ const FlightsList = (props: any): JSX.Element | null => {
                 <TableCell component="th" scope="row">
                   {flight.airline}
                 </TableCell>
-                <TableCell align="right" style={{color: 'blue', cursor: 'pointer'}} onClick={() => {handleShow(); setModalData(flight)}}>{flight.aircraft}</TableCell>
+                <TableCell
+                  align="right"
+                  style={{ color: "blue", cursor: "pointer" }}
+                  onClick={() => {
+                    handleShow();
+                    setModalData(flight);
+                  }}
+                >
+                  {flight.aircraft}
+                </TableCell>
                 <TableCell align="right">{flight.status}</TableCell>
                 <TableCell align="right">{flight.departure}</TableCell>
                 <TableCell align="right">{flight.arrival}</TableCell>
@@ -86,6 +118,15 @@ const FlightsList = (props: any): JSX.Element | null => {
           </TableBody>
         </Table>
       </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={props.flights.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
 
       <Modal
         show={show}
@@ -93,38 +134,65 @@ const FlightsList = (props: any): JSX.Element | null => {
         backdrop="static"
         fullscreen={true}
         scrollable={true}
+      >
+        <Modal.Header
+          closeButton
+          style={{ backgroundColor: "#002f5d", color: "white" }}
         >
-        <Modal.Header closeButton style={{backgroundColor: '#002f5d', color: 'white'}}>
-            <Modal.Title style={{width: '100%'}}>
-              <span style={{width: '50%'}}>{modalData.airline} {modalData.aircraft}</span> <span style={{width: '50%', float: 'right'}}>Status: <span style={{backgroundColor: 'lightgrey', borderRadius: '0.5rem', color: 'green'}}>{modalData.status}</span></span>
-            </Modal.Title>
+          <Modal.Title style={{ width: "100%" }}>
+            <span style={{ width: "50%" }}>
+              {modalData.airline} {modalData.aircraft}
+            </span>{" "}
+            <span style={{ width: "50%", float: "right" }}>
+              Status:{" "}
+              <span
+                style={{
+                  backgroundColor: "lightgrey",
+                  borderRadius: "0.5rem",
+                  color: "green",
+                }}
+              >
+                {modalData.status}
+              </span>
+            </span>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div>
-            <table style={{width: '100%', marginBottom: '2rem'}}>
-              <td style={{width: '50%'}}>
-                <h1>Departure</h1><br />
-                Airport: {modalData.departure}<br />
+            <table style={{ width: "100%", marginBottom: "2rem" }}>
+              <td style={{ width: "50%" }}>
+                <h1>Departure</h1>
+                <br />
+                Airport: {modalData.departure}
+                <br />
               </td>
-              <td style={{width: '50%', alignContent: 'flex-end'}}>
-                <h1>Arrival</h1><br />
-                Airport: {modalData.arrival}<br />
+              <td style={{ width: "50%", alignContent: "flex-end" }}>
+                <h1>Arrival</h1>
+                <br />
+                Airport: {modalData.arrival}
+                <br />
               </td>
             </table>
             Airline: {modalData.airline} <br />
-            Aircraft Number: {modalData.aircraft}<br />
-            Flight Status: {modalData.status}<br />
+            Aircraft Number: {modalData.aircraft}
+            <br />
+            Flight Status: {modalData.status}
+            <br />
           </div>
 
-          <div style={{float: 'right', padding: '2rem'}}>
-            <img src="https://www.nationsonline.org/bilder/Map_US_Airports.gif" style={{borderRadius: '2rem'}}/>
+          <div style={{ float: "right", padding: "2rem" }}>
+            <img
+              src="https://www.nationsonline.org/bilder/Map_US_Airports.gif"
+              style={{ borderRadius: "2rem" }}
+            />
           </div>
         </Modal.Body>
-        <Modal.Footer style={{backgroundColor: '#002f5d', color: 'white'}}>
-            <Button variant="secondary" onClick={handleClose}>Close</Button>
+        <Modal.Footer style={{ backgroundColor: "#002f5d", color: "white" }}>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
         </Modal.Footer>
       </Modal>
-
     </StyledContainer>
   );
 };
@@ -138,5 +206,3 @@ const StyledContainer = styled.div`
 const StyledHeaderCell = styled(TableCell)`
   cursor: pointer;
 `;
-
-

@@ -50,7 +50,10 @@
                 "codeshared": null
             },
             "aircraft": null,
-            "live": null
+            "live": {
+                "latitude": "35.6762",
+                "longitude": "139.6503"
+            }
         },
         {
             "flight_date": "2022-08-03",
@@ -103,7 +106,10 @@
                 }
             },
             "aircraft": null,
-            "live": null
+            "live": {
+                "latitude": "127.2",
+                "longitude": "32.4"
+            }
         },
         {
             "flight_date": "2022-08-03",

@@ -15,7 +15,7 @@ import { visuallyHidden } from "@mui/utils";
 import { Modal, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
-import { ComposableMap, Geographies, Geography, Line, ZoomableGroup  } from "react-simple-maps";
+import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup  } from "react-simple-maps";
 
 const FlightsList = (props: any): JSX.Element | null => {
   const { sort, order, orderBy } = props;
@@ -136,7 +136,6 @@ const FlightsList = (props: any): JSX.Element | null => {
         show={show}
         onHide={handleClose}
         backdrop="static"
-        fullscreen={true}
         scrollable={true}
       >
         <Modal.Header
@@ -187,7 +186,7 @@ const FlightsList = (props: any): JSX.Element | null => {
           <div style={{ float: "right", padding: "2rem" }}>
             
           <ComposableMap>
-            <ZoomableGroup center={[0, 0]} zoom={9}>
+            <ZoomableGroup center={[modalData.longitude, modalData.latitude]} zoom={9}>
               <Geographies geography={geoUrl}>
                 {({ geographies }: any) =>
                   geographies.map((geo: any) => (
@@ -195,13 +194,9 @@ const FlightsList = (props: any): JSX.Element | null => {
                   ))
                 }
               </Geographies>
-              <Line
-                from={[2.3522, 48.8566]}
-                to={[-74.006, 40.7128]}
-                stroke="#FF5533"
-                strokeWidth={4}
-                strokeLinecap="round"
-              />
+              <Marker coordinates={[modalData.longitude, modalData.latitude]}>
+                <circle r={2} fill="#F53" />
+              </Marker>
             </ZoomableGroup>
           </ComposableMap>
 

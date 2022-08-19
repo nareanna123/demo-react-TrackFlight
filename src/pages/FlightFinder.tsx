@@ -38,6 +38,8 @@ const FlightFinder = (): JSX.Element | null => {
     status: string;
     departure: string;
     arrival: string;
+    longitude: string;
+    latitude: string;
   }
 
   const [order, setOrder] = useState<Order>("asc");
@@ -80,12 +82,21 @@ const FlightFinder = (): JSX.Element | null => {
         setDestination(destinationTempArray);
 
         var response = resp.data.data.map((flight: any) => {
+          let latitude = 0;
+          let longitude = 0;
+          if (flight.live != null) {
+            latitude = flight.live.latitude;
+            longitude = flight.live.longitude;
+          }
+
           return {
             airline: flight.airline.name,
             aircraft: flight.flight.number,
             status: flight.flight_status,
             departure: flight.departure.airport,
             arrival: flight.arrival.airport,
+            latitude,
+            longitude,
           };
         });
         setFlights(response);

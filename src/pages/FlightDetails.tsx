@@ -166,20 +166,26 @@ const FlightsList = (props: any): JSX.Element | null => {
               <td style={{ width: "50%" }}>
                 <h1>Departure</h1>
                 <br />
-                Airport: {modalData.departure}
+                Airport: {modalData.departure}<br/>
+                Timezone: {modalData.departureTimeZone}<br/>
+                Terminal: {modalData.departureTerminal}<br/>
+                Gate: {modalData.departureGate}<br/>
+                Departure Time: {modalData.departureScheduled}<br/>
                 <br />
               </td>
-              <td style={{ width: "50%", alignContent: "flex-end" }}>
+              <td style={{ width: "50%", alignContent: "flex-end", paddingLeft: '1rem', borderLeft: 'solid 6px' }}>
                 <h1>Arrival</h1>
                 <br />
                 Airport: {modalData.arrival}
+                Timezone: {modalData.arrivalTimeZone}<br/>
+                Terminal: {modalData.arrivalTerminal}<br/>
+                Gate: {modalData.arrivalGate}<br/>
+                Arrival Time: {modalData.arrivalScheduled}<br/>
                 <br />
               </td>
             </table>
             Airline: {modalData.airline} <br />
-            Aircraft Number: {modalData.aircraft}
-            <br />
-            Flight Status: {modalData.status}
+            Aircraft Number: {modalData.aircraft}<br />
             <br />
           </div>
 

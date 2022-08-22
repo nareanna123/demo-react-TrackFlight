@@ -37,7 +37,15 @@ const FlightFinder = (): JSX.Element | null => {
     aircraft: string;
     status: string;
     departure: string;
+    departureTimeZone: string;
+    departureTerminal: string;
+    departureGate: string;
+    departureScheduled: string;
     arrival: string;
+    arrivalTimeZone: string;
+    arrivalTerminal: string;
+    arrivalGate: string;
+    arrivalScheduled: string;
     longitude: string;
     latitude: string;
   }
@@ -94,7 +102,15 @@ const FlightFinder = (): JSX.Element | null => {
             aircraft: flight.flight.number,
             status: flight.flight_status,
             departure: flight.departure.airport,
+            departureTimeZone: flight.departure.timezone,
+            departureTerminal: flight.departure.terminal,
+            departureGate: flight.departure.gate,
+            departureScheduled: flight.departure.scheduled,
             arrival: flight.arrival.airport,
+            arrivalTimezone: flight.arrival.timezone,
+            arrivalTerminal: flight.arrival.terminal,
+            arrivalGate: flight.arrival.gate,
+            arrivalScheduled: flight.arrival.scheduled,
             latitude,
             longitude,
           };

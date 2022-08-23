@@ -55,6 +55,12 @@ const FlightsList = (props: any): JSX.Element | null => {
     );
   };
 
+  const getFormattedDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString();
+  }
+
+
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -163,24 +169,24 @@ const FlightsList = (props: any): JSX.Element | null => {
         <Modal.Body>
           <div>
             <table style={{ width: "100%", marginBottom: "2rem" }}>
-              <td style={{ width: "50%" }}>
+              <td style={{ width: "50%", paddingRight: '1rem'}}>
                 <h1>Departure</h1>
                 <br />
-                Airport: {modalData.departure}<br/>
-                Timezone: {modalData.departureTimeZone}<br/>
-                Terminal: {modalData.departureTerminal}<br/>
-                Gate: {modalData.departureGate}<br/>
-                Departure Time: {modalData.departureScheduled}<br/>
+                Airport: <span style={{float: 'right'}}>{modalData.departure}</span><br/>
+                Timezone: <span style={{float: 'right'}}>{modalData.departureTimeZone}</span><br/>
+                Terminal: <span style={{float: 'right'}}>{modalData.departureTerminal}</span><br/>
+                Gate: <span style={{float: 'right'}}>{modalData.departureGate}</span><br/>
+                Departure Date: <span style={{float: 'right'}}>{getFormattedDate(modalData.departureScheduled)}</span><br/>
                 <br />
               </td>
-              <td style={{ width: "50%", alignContent: "flex-end", paddingLeft: '1rem', borderLeft: 'solid 6px' }}>
+              <td style={{ width: "50%", alignContent: "flex-end", paddingLeft: '1rem', borderLeft: 'dashed 6px' }}>
                 <h1>Arrival</h1>
                 <br />
-                Airport: {modalData.arrival}
-                Timezone: {modalData.arrivalTimeZone}<br/>
-                Terminal: {modalData.arrivalTerminal}<br/>
-                Gate: {modalData.arrivalGate}<br/>
-                Arrival Time: {modalData.arrivalScheduled}<br/>
+                Airport: <span style={{float: 'right'}}>{modalData.arrival}</span><br/>
+                Timezone: <span style={{float: 'right'}}>{modalData.arrivalTimeZone}</span><br/>
+                Terminal: <span style={{float: 'right'}}>{modalData.arrivalTerminal}</span><br/>
+                Gate: <span style={{float: 'right'}}>{modalData.arrivalGate}</span><br/>
+                Arrival Date: <span style={{float: 'right'}}>{getFormattedDate(modalData.arrivalScheduled)}</span><br/>
                 <br />
               </td>
             </table>

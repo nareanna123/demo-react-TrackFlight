@@ -56,7 +56,6 @@ const FlightFinder = (): JSX.Element | null => {
   useEffect(() => {
     getFlights();
   }, []);
-  console.log("Check Flights API Call start......");
 
   const getFlights = () => {
     //const flightsApiurl = "http://api.aviationstack.com/v1/flights?access_key=89c5f6108b671e68c341aa6da66fb46b";
@@ -65,13 +64,66 @@ const FlightFinder = (): JSX.Element | null => {
     //params.append("access_key", '7701d00a6d906ff847152d3c46b15e78');
 
     // var request = { params: params };
-    axios
+
+    //localStorage.getItem('flightData') != null && localStorage.getItem('flightData') != undefined
+    if (localStorage.getItem('flightData') != null && localStorage.getItem('flightData') != undefined)
+    {
+      console.log('FROM LOCAL STORAGE: ' + localStorage.getItem('flightData'))
+      let flightParse = JSON.parse(localStorage.getItem('flightData') + '');
+      console.log('FLIGHTPARSE: ' + flightParse[1].airline.name);
+
+      for (var i = 0; i < flightParse.length; i++) {
+        originTempArray.push(flightParse[i].departure.airport);
+        destinationTempArray.push(flightParse[i].arrival.airport);
+      }
+      originTempArray = originTempArray.filter(
+        (data, index) => originTempArray.indexOf(data) === index
+      );
+      setOrigin(originTempArray);
+
+      destinationTempArray = destinationTempArray.filter(
+        (data, index) => destinationTempArray.indexOf(data) === index
+      );
+      setDestination(destinationTempArray);
+
+      var response = flightParse.map((flight: any) => {
+        let latitude = 0;
+        let longitude = 0;
+        if (flight.live != null) {
+          latitude = flight.live.latitude;
+          longitude = flight.live.longitude;
+        }
+
+        return {
+          airline: flight.airline.name,
+          aircraft: flight.flight.number,
+          status: flight.flight_status,
+          departure: flight.departure.airport,
+          departureTimeZone: flight.departure.timezone,
+          departureTerminal: flight.departure.terminal,
+          departureGate: flight.departure.gate,
+          departureScheduled: flight.departure.scheduled,
+          arrival: flight.arrival.airport,
+          arrivalTimezone: flight.arrival.timezone,
+          arrivalTerminal: flight.arrival.terminal,
+          arrivalGate: flight.arrival.gate,
+          arrivalScheduled: flight.arrival.scheduled,
+          latitude,
+          longitude,
+        };
+      });
+      setFlights(response);
+
+    }
+
+    else {
+      axios
       .get(flightsApiurl)
 
       .then((resp) => {
-        // console.log(
-        //   "getAllFlights response list -> " + JSON.stringify(resp.data)
-        // );
+        console.log(
+          "getAllFlights response list -> " + JSON.stringify(resp.data)
+        );
         localStorage.setItem('flightData', JSON.stringify(resp.data.data));
         let flightParse = JSON.parse(localStorage.getItem('flightData') + '');
         setFlights(flightParse);
@@ -122,14 +174,12 @@ const FlightFinder = (): JSX.Element | null => {
       .catch((err) => {
         console.error("Error " + err);
       });
+    }
   };
 
   useEffect(() => {
     getFlights();
   }, [])
-  console.log(
-    "CHeck Flights API Call start......"
-  )
 
   const getFlightsbySearchTerm = () => {
     console.log("inside flights search 2");

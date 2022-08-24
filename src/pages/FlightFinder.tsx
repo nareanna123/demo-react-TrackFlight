@@ -69,10 +69,12 @@ const FlightFinder = (): JSX.Element | null => {
       .get(flightsApiurl)
 
       .then((resp) => {
-        console.log(
-          "getAllFlights response list -> " + JSON.stringify(resp.data)
-        );
-        setFlights(resp.data.data);
+        // console.log(
+        //   "getAllFlights response list -> " + JSON.stringify(resp.data)
+        // );
+        localStorage.setItem('flightData', JSON.stringify(resp.data.data));
+        let flightParse = JSON.parse(localStorage.getItem('flightData') + '');
+        setFlights(flightParse);
         for (var i = 0; i < resp.data.data.length; i++) {
           //originTempArray.push(resp.data.data[i].departure.airport + "-" + resp.data.data[i].departure.iata + "-" + resp.data.data[i].departure.icao);
           //destinationTempArray.push(resp.data.data[i].arrival.airport + "-" + resp.data.data[i].arrival.iata + "-" + resp.data.data[i].arrival.icao);

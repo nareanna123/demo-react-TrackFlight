@@ -66,10 +66,10 @@ const FlightFinder = (): JSX.Element | null => {
     // var request = { params: params };
 
     //localStorage.getItem('flightData') != null && localStorage.getItem('flightData') != undefined
-    if (localStorage.getItem('flightData') != null && localStorage.getItem('flightData') != undefined)
+    if (sessionStorage.getItem('flightData') != null && sessionStorage.getItem('flightData') != undefined)
     {
-      console.log('FROM LOCAL STORAGE: ' + localStorage.getItem('flightData'))
-      let flightParse = JSON.parse(localStorage.getItem('flightData') + '');
+      console.log('FROM SESSION STORAGE: ' + sessionStorage.getItem('flightData'))
+      let flightParse = JSON.parse(sessionStorage.getItem('flightData') + '');
       console.log('FLIGHTPARSE: ' + flightParse[1].airline.name);
 
       for (var i = 0; i < flightParse.length; i++) {
@@ -124,8 +124,8 @@ const FlightFinder = (): JSX.Element | null => {
         console.log(
           "getAllFlights response list -> " + JSON.stringify(resp.data)
         );
-        localStorage.setItem('flightData', JSON.stringify(resp.data.data));
-        let flightParse = JSON.parse(localStorage.getItem('flightData') + '');
+        sessionStorage.setItem('flightData', JSON.stringify(resp.data.data));
+        let flightParse = JSON.parse(sessionStorage.getItem('flightData') + '');
         setFlights(flightParse);
         for (var i = 0; i < resp.data.data.length; i++) {
           //originTempArray.push(resp.data.data[i].departure.airport + "-" + resp.data.data[i].departure.iata + "-" + resp.data.data[i].departure.icao);
@@ -185,7 +185,7 @@ const FlightFinder = (): JSX.Element | null => {
     console.log("inside flights search 2");
     console.log(selectedOrigin);
     console.log(selectedDestination);
-    toast("No Flights Found", { toastId: toastId })
+    toast("Please enter a valid flight", { toastId: toastId })
     let filterlist = flights.filter((flight: any) => {
       //return flight.departure.airport.toLowerCase().includes(searchFlights.toLowerCase())
       return (

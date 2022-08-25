@@ -65,10 +65,10 @@ const FlightFinder = (): JSX.Element | null => {
 
     // var request = { params: params };
 
-    //localStorage.getItem('flightData') != null && localStorage.getItem('flightData') != undefined
+    //sessionStorage.getItem('flightData') != null && sessionStorage.getItem('flightData') != undefined
     if (sessionStorage.getItem('flightData') != null && sessionStorage.getItem('flightData') != undefined)
     {
-      console.log('FROM SESSION STORAGE: ' + sessionStorage.getItem('flightData'))
+      console.log('FROM LOCAL STORAGE: ' + sessionStorage.getItem('flightData'))
       let flightParse = JSON.parse(sessionStorage.getItem('flightData') + '');
       console.log('FLIGHTPARSE: ' + flightParse[1].airline.name);
 
@@ -185,7 +185,7 @@ const FlightFinder = (): JSX.Element | null => {
     console.log("inside flights search 2");
     console.log(selectedOrigin);
     console.log(selectedDestination);
-    toast("Please enter a valid flight", { toastId: toastId })
+    toast.error("Please enter a valid origin and destination", { toastId: toastId })
     let filterlist = flights.filter((flight: any) => {
       //return flight.departure.airport.toLowerCase().includes(searchFlights.toLowerCase())
       return (
